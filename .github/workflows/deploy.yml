@@ -19,16 +19,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
-      - run: npm run build --if-present
 
       - uses: a7ul/tar-action@v1.1.0
         with:
           command: c
           cwd: "./"
           files: |
-            dist/
-            captain-definition
-            package.json
           outPath: deploy.tar
 
       - name: Deploy App to CapRover
