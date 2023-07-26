@@ -27,7 +27,7 @@ jobs:
           command: c
           cwd: "./"
           files: |
-            distc/*
+            dist/
             captain-definition
           outPath: deploy.tar
 
