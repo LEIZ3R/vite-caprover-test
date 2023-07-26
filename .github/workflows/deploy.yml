@@ -20,7 +20,7 @@ jobs:
       - name: Deploy on CapRover
         uses: caprover/deploy-from-github@v1.1.2
         with:
-          server: https://apex.place
+          server: https://captain.x-project.cloud
           app: "sveltekit"
           token: "${{ secrets.APP_TOKEN }}"
           image: "ghcr.io/LEIZ3R/vite-caprover-test:latest"
