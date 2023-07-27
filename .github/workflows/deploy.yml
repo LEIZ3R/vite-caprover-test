@@ -1,26 +1,24 @@
-name: build + publish
-
+name: Deploy to CapRover
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
-  build:
+  deploy_to_caprover:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Publish Docker Image
-        uses: matootie/github-docker@v3.1.0
+
+      - name: Create Tarball
+        run: |
+          tar -cvf files.tar ./*
+
+      - name: Deploy to CapRover
+        uses: caprover/deploy-from-github@v1.0.1
         with:
-          accessToken: ${{ github.token }}
-          containerRegistry: true
-      - name: Deploy on CapRover
-        uses: caprover/deploy-from-github@v1.1.2
-        with:
+          caprover_login_password: '${{ secrets.CAPROVER_PASSWORD }}'
           server: '${{ secrets.CAPROVER_SERVER }}'
-          app: 'vite-caprover-ci'
-          token: '${{ secrets.APP_TOKEN }}'
-          image: 'ghcr.io/LEIZ3R/vite-caprover-test:latest'
+          app: '${{ secrets.APP_NAME }}'
+          tarfile_path: ./files.tar
